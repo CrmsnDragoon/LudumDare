@@ -58,14 +58,6 @@ public class SmallWorlds {
 			
 			
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT |GL11.GL_DEPTH_BUFFER_BIT); 
-			GL11.glColor3f(0.5f,0.5f,1.0f);
-			// draw quad
-			GL11.glBegin(GL11.GL_QUADS);
-			GL11.glVertex2f(100,100);
-			GL11.glVertex2f(100+200,100);
-			GL11.glVertex2f(100+200,100+200);
-			GL11.glVertex2f(100,100+200);
-			GL11.glEnd();
 			
 			spriteManager.Render();
 			tileManager.Render();
@@ -73,7 +65,7 @@ public class SmallWorlds {
 			calcFPS();
 			
 			Display.update();
-			//Display.sync(120);
+			Display.sync(120);
 			
 			if (GL11.glGetError() != GL11.GL_NO_ERROR && GL11.glGetError() != 0)
 			{

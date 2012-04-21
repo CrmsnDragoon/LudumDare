@@ -20,7 +20,7 @@ public class SpriteManager {
 		loadtextures();
 		shots = new Vector<Sprite>();
 		enemys = new Vector<Sprite>();
-		player = new Player(vbo, ibo, playerTex, 400, 400, 0);
+		player = new Player(playerTex, 400, 400, 0);
 	}
 	
 	private void loadtextures() {

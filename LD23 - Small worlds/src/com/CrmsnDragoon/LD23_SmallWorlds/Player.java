@@ -6,8 +6,8 @@ import org.newdawn.slick.opengl.Texture;
 public class Player extends Sprite {
 	int health;
 
-	public Player(int vbo, int ibo, Texture playerTex, float x, float y, float z) {
-		super(vbo, ibo, playerTex, x, y, z);
+	public Player(Texture playerTex, float x, float y, float z) {
+		super(playerTex, x, y, z);
 		health = 0;
 	}
 
