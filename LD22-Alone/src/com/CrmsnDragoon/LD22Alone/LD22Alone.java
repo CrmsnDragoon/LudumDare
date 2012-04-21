@@ -24,7 +24,7 @@ public class LD22Alone extends BasicGame {
 		try {
 			AppGameContainer container = new AppGameContainer(new LD22Alone(
 					"Alone"));
-			//container.setMinimumLogicUpdateInterval(20);
+			//container.setMinimumLogicUpdateInterval(80);
 			container.setDisplayMode(800, 600, false);
 			container.start();
 		} catch (SlickException e) {
