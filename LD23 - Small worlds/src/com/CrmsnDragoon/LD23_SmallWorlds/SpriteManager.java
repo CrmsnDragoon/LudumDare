@@ -8,9 +8,12 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import com.CrmsnDragoon.LD23_SmallWorlds.Sprites.Player;
+import com.CrmsnDragoon.LD23_SmallWorlds.Sprites.Sprite;
+
 public class SpriteManager {
 	Player player;
-	Vector<Sprite> shots;
+	Vector<Shot> shots;
 	Vector<Sprite> enemys;
 	TileManager tileManager;
 	private Texture playerTex;
@@ -18,7 +21,7 @@ public class SpriteManager {
 	public SpriteManager(int vbo, int ibo)
 	{
 		loadtextures();
-		shots = new Vector<Sprite>();
+		shots = new Vector<Shot>();
 		enemys = new Vector<Sprite>();
 		player = new Player(playerTex, 400, 400, 0);
 	}
@@ -34,7 +37,8 @@ public class SpriteManager {
 
 	public void changeLevel(BufferedImage level)
 	{
-		player.TeleportTo(tileManager.getStartLoc());
+		
+		player.teleportTo(tileManager.getStartLoc());
 	}
 	
 	public void setTileManager(TileManager tileManager) {
