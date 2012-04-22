@@ -19,7 +19,7 @@ import org.lwjgl.util.glu.GLU;
 public class SmallWorlds {
 
 	private static boolean paused = true, pausedLastFrame = false;
-	private static long lastFrame = 0;
+	private static long lastFrame = getTime();
 	private static int frames = 0;
 	private static long lastFPS;
 
@@ -28,7 +28,7 @@ public class SmallWorlds {
 	 */
 	public static void main(String[] args) {
 		try {
-			Display.setDisplayMode(new DisplayMode(32*16*2,32*12*2));
+			Display.setDisplayMode(new DisplayMode(34*16,34*16));
 			Display.setFullscreen(false);
 			Display.create();
 			Mouse.create();
@@ -48,24 +48,29 @@ public class SmallWorlds {
 		spriteManager.setTileManager(tileManager);
 		tileManager.setLevel("assets/lvl/lvl1.png");
 
-		lastFPS = getTime();
+		
+		PauseMessage pausedMessage = new PauseMessage();
+		
 		Display.update();
+		lastFPS = getTime();
+		lastFrame = getTime();
 		while (!Display.isCloseRequested()) {
 			pollInput();
 			if (!paused) {
-				System.out.print("Updating!\n");
 				spriteManager.Update(getDeltaTime());
 				tileManager.Update(getDeltaTime());
 			}
 			
-			
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT |GL11.GL_DEPTH_BUFFER_BIT); 
 			
-			GL11.glClearColor(1, 1, 1, 1);
+			//GL11.glClearColor(1, 1, 1, 1);
 			tileManager.Render();
 			spriteManager.Render();
 			
-			
+			if (paused)
+			{
+				pausedMessage.render();
+			}
 			calcFPS();
 			
 			Display.update();
@@ -88,7 +93,7 @@ public class SmallWorlds {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);	
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
-		GL11.glOrtho(0, 32*4, 0, 48*2, 1, -1);
+		GL11.glOrtho(0, 64+(8*2), 0, 64+(8*2), 1, -1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
 	}
@@ -159,6 +164,7 @@ public class SmallWorlds {
 			if (!pausedLastFrame) {
 				if (paused) {
 					paused = false;
+					lastFrame = getTime();
 				} else {
 					paused = true;
 				}
