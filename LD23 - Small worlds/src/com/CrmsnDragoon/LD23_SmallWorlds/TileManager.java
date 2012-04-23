@@ -16,27 +16,37 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.AnimBlock;
 import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.BackWall;
+import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.Button;
+import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.Door;
 import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.KillTile;
 import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.SkyTile;
 import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.Tile;
 import com.CrmsnDragoon.LD23_SmallWorlds.Tiles.Wall;
 
 public class TileManager {
-	Tile[][] tiles;
-	SpriteManager spriteManager;
-	private Vector3f startLoc;
-	private Texture wallTex,backWallTex,firepitTex;
-	private Texture doorTex,buttonTex, hintUpTex;
-	private Vector<Texture> skyTex;
+	private byte currentLevel = -1;
 	private int levelWidth;
 	private int levelHeight;
+	private Tile[][] tiles;
 	private Random RNG;
+	private SpriteManager spriteManager;
+	private Vector3f startLoc;
+	private Texture wallTex,backWallTex,firepitTex;
+	private Texture doorTex;
+	private Texture buttonUpTex,buttonDwnTex;private Texture hintUpTex;
 	private Texture goalTex1, goalTex2;
+	private Vector<Texture> skyTex;
+	private Vector<String> levels;
+
+
+	
+	
 	
 	public TileManager(int vbo, int ibo, SpriteManager spriteManager) {
 		tiles = new Tile[512][512];
 		this.spriteManager = spriteManager;
 		startLoc = new Vector3f(0,0,0);
+		levels = new Vector<String>();
 		skyTex = new Vector<Texture>();
 		RNG = new Random();
 		loadTextures();
@@ -49,7 +59,8 @@ public class TileManager {
 			hintUpTex = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("assets/tiles/walls/hintUp.png"));
 			
 			doorTex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/tiles/doors/redDoor.png"));
-			buttonTex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/tiles/buttons/buttonUp.png"));
+			buttonUpTex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/tiles/buttons/buttonUp.png"));
+			buttonDwnTex = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/tiles/buttons/buttonDwn.png"));
 			firepitTex = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("assets/tiles/hazards/blueFirePit.png"));
 			goalTex1 = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("assets/tiles/goal/goal1.png"));
 			goalTex2 = TextureLoader.getTexture("PNG",ResourceLoader.getResourceAsStream("assets/tiles/goal/goal2.png"));
@@ -99,6 +110,10 @@ public class TileManager {
 		levelWidth = level.getWidth();
 		levelHeight = level.getHeight();
 		Vector2f newStartLoc = new Vector2f();
+		
+		Vector<Door> redDoorCache = new Vector<Door>();
+		Button redButton = null;
+		
 		for (int i = 0; i<level.getWidth();i++)
 		{
 			for (int j=0;j<level.getHeight();j++)
@@ -128,6 +143,15 @@ public class TileManager {
 					break;
 				case 0xFF0000FF:
 					tiles[i][j] = new KillTile(firepitTex,i*8,j*8,0);
+					break;
+				case 0xFFDDDD00://it's a red door!
+					redDoorCache.add(new Door(doorTex,i*8,j*8,0));
+					tiles[i][j] = redDoorCache.get(redDoorCache.size()-1);
+					break;
+				case 0xFFBBBB00://it's a red button!
+					redButton = new Button(buttonUpTex,buttonDwnTex,i*8,j*8,0);
+					tiles[i][j] = redButton;
+					break;
 				default:
 					tiles[i][j] = new BackWall(backWallTex,i*8,j*8,1);
 				}
@@ -135,6 +159,11 @@ public class TileManager {
 		}
 		
 		startLoc = new Vector3f(newStartLoc.x,newStartLoc.y,0);
+		
+		if (redButton!= null) {
+			//set the red button to trigger the red doors
+			redButton.setTrigger(redDoorCache);
+		}
 		spriteManager.changeLevel(level);
 		
 	}
@@ -147,5 +176,13 @@ public class TileManager {
 		return tiles;
 	}
 
+	public void incrementLevel() {
+		currentLevel++;
+		this.setLevel(levels.get(currentLevel));
+	}
+	public void addLevel(String levelPath)
+	{
+		levels.add(levelPath);
+	}
 
 }

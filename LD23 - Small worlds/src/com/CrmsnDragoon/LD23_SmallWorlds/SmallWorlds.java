@@ -46,7 +46,8 @@ public class SmallWorlds {
 		SpriteManager spriteManager = new SpriteManager(vbo, ibo);
 		TileManager tileManager = new TileManager(vbo, ibo, spriteManager);
 		spriteManager.setTileManager(tileManager);
-		tileManager.setLevel("assets/lvl/lvl1.png");
+		tileManager.addLevel("assets/lvl/lvl1.png");
+		tileManager.incrementLevel();//load the first level
 
 		
 		PauseMessage pausedMessage = new PauseMessage();
