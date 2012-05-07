@@ -12,6 +12,7 @@ import org.lwjgl.opengl.ARBVertexBufferObject;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 
 
@@ -126,17 +127,20 @@ public class SmallWorlds {
 		IntBuffer ibo = BufferUtils.createIntBuffer(1);
 		ARBVertexBufferObject.glGenBuffersARB(ibo);
 
-		IntBuffer ints = BufferUtils.createIntBuffer(6);
-		int array[] = { 0, 1, 2, 2, 3, 0 };
-		for (int i = 0; i < array.length; i++) {
-			ints.put(array[i]);
+		if (GLContext.getCapabilities().GL_ARB_vertex_buffer_object) {
+			IntBuffer ints = BufferUtils.createIntBuffer(6);
+			int array[] = { 0, 1, 2, 2, 3, 0 };
+			for (int i = 0; i < array.length; i++) {
+				ints.put(array[i]);
+			}
+			ints.flip();
+			ARBVertexBufferObject.glBindBufferARB(
+					ARBVertexBufferObject.GL_ELEMENT_ARRAY_BUFFER_ARB,
+					ibo.get(0));
+			ARBVertexBufferObject.glBufferDataARB(
+					ARBVertexBufferObject.GL_ELEMENT_ARRAY_BUFFER_ARB, ints,
+					ARBVertexBufferObject.GL_STATIC_DRAW_ARB);
 		}
-
-		ARBVertexBufferObject.glBindBufferARB(
-				ARBVertexBufferObject.GL_ELEMENT_ARRAY_BUFFER_ARB, ibo.get(0));
-		ARBVertexBufferObject.glBufferDataARB(
-				ARBVertexBufferObject.GL_ELEMENT_ARRAY_BUFFER_ARB, ints,
-				ARBVertexBufferObject.GL_STATIC_DRAW_ARB);
 		return ibo.get(0);
 	}
 
@@ -144,17 +148,20 @@ public class SmallWorlds {
 		IntBuffer vbo = BufferUtils.createIntBuffer(1);
 		ARBVertexBufferObject.glGenBuffersARB(vbo);
 
-		FloatBuffer verts = BufferUtils.createFloatBuffer((3+2) * 4);
-		float array[] = { 0,0,0, 0,1, 0,100,0, 0,0, 100,100,0, 1,0, 100,0,0, 1,1 }; // x,y,z, u,v, x,y,z, u,v, x,y,z, u,v, x,y,z, u,v
-		for (int i = 0; i < array.length; i++) {
-			verts.put(array[i]);
+		if (GLContext.getCapabilities().GL_ARB_vertex_buffer_object) {
+			FloatBuffer verts = BufferUtils.createFloatBuffer((3 + 2) * 4);
+			float array[] = { 0,0,0, 0,1, 0,16,0, 0,0, 16,16,0, 1,
+					0, 16,0,0, 1,1 }; // x,y,z, u,v, x,y,z, u,v, x,y,z, u,v, x,y,z, u,v
+			for (int i = 0; i < array.length; i++) {
+				verts.put(array[i]);
+			}
+			verts.flip();
+			ARBVertexBufferObject.glBindBufferARB(
+					ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, vbo.get(0));
+			ARBVertexBufferObject.glBufferDataARB(
+					ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, verts,
+					ARBVertexBufferObject.GL_STATIC_DRAW_ARB);
 		}
-
-		ARBVertexBufferObject.glBindBufferARB(
-				ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, vbo.get(0));
-		ARBVertexBufferObject.glBufferDataARB(
-				ARBVertexBufferObject.GL_ARRAY_BUFFER_ARB, verts,
-				ARBVertexBufferObject.GL_STATIC_DRAW_ARB);
 		return vbo.get(0);
 	}
 

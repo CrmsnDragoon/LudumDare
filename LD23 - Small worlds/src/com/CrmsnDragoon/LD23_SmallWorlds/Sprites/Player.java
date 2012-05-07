@@ -83,10 +83,10 @@ public class Player extends Sprite {
 
 	private Vector3f collisionDetection(Tile tile, Vector3f add) {
 		boolean bottomLeft = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x,this.getLoc().y+add.y,this.getLoc().z+add.z));
-		boolean bottomRight = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x+8f,this.getLoc().y+add.y,this.getLoc().z+add.z));
-		boolean topLeft = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x,this.getLoc().y+add.y+8f,this.getLoc().z+add.z));
-		boolean topRight = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x+8f,this.getLoc().y+add.y+8f,this.getLoc().z+add.z));
-		boolean middleTop = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x+4,this.getLoc().y+add.y+7.5f,this.getLoc().z+add.z));
+		boolean bottomRight = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x+7.5f,this.getLoc().y+add.y,this.getLoc().z+add.z));
+		boolean topLeft = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x,this.getLoc().y+add.y+7.5f,this.getLoc().z+add.z));
+		boolean topRight = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x+7.5f,this.getLoc().y+add.y+7.5f,this.getLoc().z+add.z));
+		boolean middleTop = isPointInTile(tile, new Vector3f(this.getLoc().x+add.x+3.25f,this.getLoc().y+add.y+7.5f,this.getLoc().z+add.z));
 		if(bottomLeft)
 		{
 			System.out.print("Collision Detected! it's to the right!\n");
@@ -120,7 +120,7 @@ public class Player extends Sprite {
 				System.out.print("Collision Detected! It's from below, on both sides!\n");
 				if(!tile.collisionEffect(this))//if the tile doesn't stop collision resolution
 				{
-					add.y -= tile.getLoc().y-this.getLoc().y+.5f;
+					add.y += add.y*-1f;
 				}
 				System.out.print("Set add to X:"+ add.x+", Y:"+add.y+", Z:"+add.z+"\n");
 			}else
@@ -130,7 +130,7 @@ public class Player extends Sprite {
 			System.out.print("Collision Detected! It's from below!\n");
 			if(!tile.collisionEffect(this))//if the tile doesn't stop collision resolution
 			{
-				add.y += tile.getLoc().y-this.getLoc().y;
+				add.y += add.y*-1;
 			}
 			System.out.print("Set add to X:"+ add.x+", Y:"+add.y+", Z:"+add.z+"\n");
 		}

@@ -11,6 +11,7 @@ import org.newdawn.slick.util.ResourceLoader;
 import com.CrmsnDragoon.LD23_SmallWorlds.Sprites.Player;
 import com.CrmsnDragoon.LD23_SmallWorlds.Sprites.Shot;
 import com.CrmsnDragoon.LD23_SmallWorlds.Sprites.Sprite;
+import com.CrmsnDragoon.LD23_SmallWorlds.Sprites.Turret;
 
 public class SpriteManager {
 	Player player;
@@ -18,7 +19,7 @@ public class SpriteManager {
 	Vector<Sprite> enemys;
 	TileManager tileManager;
 	private Texture playerTex1, playerTex2, playerTex3;
-	//private Texture turretTex1;
+	private Texture turretTex1,turretTex2,turretTex3,turretTex4;
 	
 	public SpriteManager(int vbo, int ibo)
 	{
@@ -33,7 +34,11 @@ public class SpriteManager {
 			playerTex1 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/player/player_static1.png"));
 			playerTex2 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/player/player_static2.png"));
 			playerTex3 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/player/player_static3.png"));
-			//turretTex1 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/enemy/turret_static1.png"));
+			turretTex1 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/turret/turret1.png"));
+			turretTex2 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/turret/turret1.png"));
+			turretTex3 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/turret/turret1.png"));
+			turretTex4 = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("assets/sprites/turret/turret1.png"));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -47,7 +52,14 @@ public class SpriteManager {
 		{
 			for(int j=0;j<level.getHeight();j++)
 			{
-				
+				switch (level.getRGB(i, j))
+				{
+				case 0xF0F3F3F3:
+					enemys.add(new Turret(turretTex1,turretTex2,turretTex3,turretTex4, i*8,j*8,0,100));
+					break;
+				default:
+					break;
+				}
 			}
 		}
 		player.teleportTo(tileManager.getStartLoc());

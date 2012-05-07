@@ -1,14 +1,14 @@
 
 package com.crmsndragoon.LD23Warmup;
 
-import java.util.Vector;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+
+import java.util.Vector;
 /**
  * @author Dylan Sinnott
  * @theme Drawings
