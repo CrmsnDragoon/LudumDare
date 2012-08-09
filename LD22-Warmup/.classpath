@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick Build 274"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick-Utils"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick-utils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
