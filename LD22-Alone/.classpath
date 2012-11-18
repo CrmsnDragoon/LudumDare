@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick Build 274"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL-2.8.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL-2.8.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick-utils"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
