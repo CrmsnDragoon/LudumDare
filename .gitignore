@@ -6,6 +6,24 @@
 .project
 .metadata
 bin/
+LD22-Alone/bin/
+LD22-Alone/.settings/
+LD22-Warmup/bin/
+LD22-Warmup/.settings/
+LD23 - Small worlds/bin/
+LD23 - Small worlds/.settings/
+LD23 Warmup/bin/
+LD23 Warmup/.settings/
+LD-Escape/bin/
+LD-Escape/.settings/
+LD26/LD26/bin/
+LD26/LD26/.settings/
+LD26/LD26-android/bin/
+LD26/LD26-android/.settings/
+LD26/LD26-desktop/bin/
+LD26/LD26-desktop/.settings/
+LD26/LD26-html/bin/
+LD26/LD26-html/.settings/
 tmp/
 *.tmp
 *.bak
@@ -161,3 +179,4 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+LD26/LD26-html/war/WEB-INF/lib/
