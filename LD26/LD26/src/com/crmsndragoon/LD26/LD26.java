@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.*;
 
@@ -23,21 +24,20 @@ public class LD26 implements ApplicationListener {
 	private Sprite m_sprite;
 	private Sound m_coinPickup;
 	private AssetManager m_assetMgr;
-	private BitmapFont m_textFont;
 	
 	@Override
 	public void create() {		
 		
 		//Start loading assets ASAP to reduce blocking.
 		m_assetMgr = new AssetManager();
-		Gdx.app.debug("LOADING ", "textures/coin.png");
+		Gdx.app.log("LOADING ", "textures/coin.png");
 		m_assetMgr.load("textures/coin.png", Texture.class);
-		Gdx.app.debug("LOADING ", "textures/test.dds");
-		m_assetMgr.load("textures/coin.png", Texture.class);
-		Gdx.app.debug("LOADING ", "sounds/pickupCoin1.mp3");
+		Gdx.app.log("LOADING ", "textures/heart.png");
+		m_assetMgr.load("textures/heart.png", Texture.class);
+		Gdx.app.log("LOADING ", "sounds/pickupCoin1.mp3");
 		m_assetMgr.load("sounds/pickupCoin1.mp3", Sound.class);
 		//if another font besides Arial is desired, load it here.
-		//m_assetMgr.load("fonts/",BitmapFont.class);
+		m_assetMgr.load("fonts/menu.fnt",BitmapFont.class);
 
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
@@ -49,8 +49,6 @@ public class LD26 implements ApplicationListener {
 		m_camera = new OrthographicCamera(w,h);
 		m_camera.setToOrtho(false,800,480);
 		
-		m_textFont = new BitmapFont();
-		
 		m_multiplex = new InputMultiplexer();
 		m_multiplex.addProcessor(m_guiMgr.getGuiStage());
 		Gdx.input.setInputProcessor(m_multiplex);
@@ -61,16 +59,20 @@ public class LD26 implements ApplicationListener {
 		//TODO: Loading screen
 		m_assetMgr.finishLoading();
 		
-		m_texture = m_assetMgr.get("textures/coin.png", Texture.class);
+		m_texture = m_assetMgr.get("textures/heart.png", Texture.class);
 		
+		m_guiMgr.finishAssetLoad(m_assetMgr);
+		m_guiMgr.addTextActor(new Vector2(Gdx.graphics.getWidth()*0.7f,Gdx.graphics.getHeight()*0.95f),
+				"Ludum Dare #26\nTheme: TBA",
+				 GUIManager.GUITEXTTYPE.MENU);
 		
 		int width = 16;
-		int height = 32;
+		int height = 16;
 		int x = 800 / 2 - width / 2;
 		int y = 20;
 		
 		//create texture region, set which coin by changing x value
-		TextureRegion textureRegion = new TextureRegion(m_texture,16,0, width, height);
+		TextureRegion textureRegion = new TextureRegion(m_texture,0,0, width, height);
 		
 		m_sprite = new Sprite(textureRegion);
 		//set sprite position in local space, no matrix stack as of yet
@@ -97,16 +99,16 @@ public class LD26 implements ApplicationListener {
 		//GUI!
 		m_batch.setProjectionMatrix(m_camera.combined);
 		m_batch.begin();
-		for (int i = 0; i<=30;++i){
+		for (int i = 0; i<=10;++i){
 			for(int j = 0; j<=1;++j){
-				m_sprite.setPosition((16*i)+16, -((32*j)+16)+ Gdx.graphics.getHeight()*0.925f);
+				m_sprite.setPosition((20*i)+16, -((20*j)+16)+ Gdx.graphics.getHeight()*0.925f);
 				m_sprite.draw(m_batch);
 			}
 		}
-		m_textFont.drawMultiLine(m_batch,"Ludum Dare #26\nTheme: TBA",
-				Gdx.graphics.getWidth()*0.8f,Gdx.graphics.getHeight()*0.95f);
 		//End of GUI!
 		m_batch.end();
+		m_guiMgr.getGuiStage().act(Gdx.graphics.getDeltaTime());
+		m_guiMgr.draw();
 	}
 
 	@Override

@@ -8,7 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class GUIComponent extends Actor{
-	private Vector <GUIComponent> m_components;
+	protected Vector <GUIComponent> m_components;
+	
+	public GUIComponent(){
+		super();
+		m_components = new Vector <GUIComponent>();
+	}
 	
 	public Vector <GUIComponent> getComponents() {
 		return m_components;
