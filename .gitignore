@@ -180,3 +180,8 @@ pip-log.txt
 # Mac crap
 .DS_Store
 LD26/LD26-html/war/WEB-INF/lib/
+LD26/LD26/libs/
+LD26/LD26-desktop/libs/
+LD26/LD26-android/libs/
+LD22-Warmup/lib/
+LD26/LD26-html/war/WEB-INF/classes/com/crmsndragoon/LD26/client/GwtLauncher.class
