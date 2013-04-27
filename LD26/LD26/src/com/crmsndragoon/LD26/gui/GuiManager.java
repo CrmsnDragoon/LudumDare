@@ -4,8 +4,9 @@ import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.utils.Disposable;
 
-public class GuiManager {
+public class GuiManager implements Disposable {
 	private Stage m_stage;
 	private BitmapFont m_font;
 	private Vector<TextActor> m_textActors;
@@ -28,6 +29,15 @@ public class GuiManager {
 	}
 	public Stage getStage() {
 		return m_stage;
+	}
+	@Override
+	public void dispose() {
+		m_textActors.clear();
+		m_font.dispose();
+		m_stage.dispose();
+	}
+	public void draw() {
+		m_stage.draw();
 	}
 
 }

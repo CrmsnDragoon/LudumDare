@@ -1,9 +1,12 @@
 package com.crmsndragoon.LD26.entities;
 
-public abstract class Tile extends Entity {
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-	public Tile() {
-		super();
+public class Tile extends Entity {
+
+	public Tile(float x, float y, Sprite sprite) {
+		super(x,y,sprite);
+		
 	}
 
 }

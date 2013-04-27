@@ -1,6 +1,6 @@
 ## LD26: Minimalism ##
 - Two colour palette
-- 3 buttons or less
+- 3 buttons or less (<-, ->, Space?)
 - 
 
 ## LD23: Small Worlds ##
