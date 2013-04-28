@@ -25,10 +25,17 @@ public class Player extends Entity implements InputProcessor {
 			setY(m_physBody.getPosition().y * PhysicsManager.BOX_TO_WORLD);
 			
 			if (m_physBody.getLinearVelocity().y == 0){
-				m_physBody.applyLinearImpulse(m_acceleration,m_physBody.getLocalCenter());
+				m_physBody.applyLinearImpulse(new Vector2(0,m_acceleration.y),m_physBody.getLocalCenter());
 			}
-			else {
+			if (Math.abs(m_physBody.getLinearVelocity().x)<2.5f){
 				m_physBody.applyLinearImpulse(new Vector2(m_acceleration.x,0),m_physBody.getLocalCenter());
+			}
+			
+			if (m_physBody.getLinearVelocity().x > 0) {
+				getSprite().setRegionWidth(4);
+			}
+			else if (m_physBody.getLinearVelocity().x < 0) {
+				getSprite().setRegionWidth(-6);
 			}
 		}
 	}
@@ -39,14 +46,14 @@ public class Player extends Entity implements InputProcessor {
 		batch.setColor(colour.r, colour.g, colour.b, colour.a * parentColour);
 		batch.draw(getSprite(), getX(), getY(), getOriginX()-0.85f, getOriginY()-.5f,
 				getWidth(), getHeight(), getScaleX(), getScaleY(),
-				getRotation()*57.2957795f);
+				getRotation());
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.SPACE:
-				m_acceleration.y = 200f;
+				m_acceleration.y = 140f;
 			break;
 		case Keys.A:
 			m_acceleration.x += -25f;
@@ -54,10 +61,10 @@ public class Player extends Entity implements InputProcessor {
 		case Keys.D:
 			m_acceleration.x += +25f;
 			break;
-		case Keys.RIGHT:
+		case Keys.LEFT:
 			m_acceleration.x += -25f;
 			break;
-		case Keys.LEFT:
+		case Keys.RIGHT:
 			m_acceleration.x += +25f;
 			break;
 		default:
@@ -73,22 +80,23 @@ public class Player extends Entity implements InputProcessor {
 			m_acceleration.y = 0;
 			break;
 		case Keys.A:
-			m_acceleration.x = 0;
+			m_acceleration.x += 25f;
 			break;
 		case Keys.D:
-			m_acceleration.x = 0;
-			break;
-		case Keys.RIGHT:
-			m_acceleration.x = 0;
+			m_acceleration.x += -25f;
 			break;
 		case Keys.LEFT:
-			m_acceleration.x = 0;
+			m_acceleration.x += 25f;
+			break;
+		case Keys.RIGHT:
+			m_acceleration.x += -25f;
 			break;
 		default:
 			return false;
 		}
 		return true;
 	}
+	
 	@Override
 	public boolean keyTyped(char character) {
 		// not needed as of yet

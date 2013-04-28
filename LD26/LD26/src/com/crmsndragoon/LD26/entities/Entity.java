@@ -1,6 +1,5 @@
 package com.crmsndragoon.LD26.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -41,7 +40,6 @@ public abstract class Entity extends Actor {
 	}
 
 	public void setPhysBody(Body body) {
-		Gdx.app.log("SETTING", "PHYSICS BODY");
 		m_physBody = body;
 	}
 	

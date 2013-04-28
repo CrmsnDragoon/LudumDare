@@ -62,14 +62,23 @@ public class PhysicsManager implements Disposable{
 		bodDef.position.y = ent.getY() * WORLD_TO_BOX;
 		bodDef.type = BodyType.StaticBody;
 		Body bod = m_physWorld.createBody(bodDef);
+		
 		FixtureDef fixDef = new FixtureDef();
-		PolygonShape entShape = new PolygonShape();
-		entShape.setAsBox(0.5f, 0.5f);
-		fixDef.shape = entShape;
 		fixDef.density = 1.0f;
 		fixDef.friction = 1.0f;
+		
+		PolygonShape entShape = new PolygonShape();
+		entShape.setAsBox(0.48f, 0.48f);
+		fixDef.shape = entShape;
 		bod.createFixture(fixDef);
 		entShape.dispose();
+		
+		EdgeShape shape = new EdgeShape();
+		shape.set(new Vector2(-0.51f,0.5f),new Vector2(0.51f,0.5f));
+		fixDef.shape = shape;
+		bod.createFixture(fixDef);
+		shape.dispose();
+		
 		bod.setUserData(ent);
 		ent.setPhysBody(bod);
 	}

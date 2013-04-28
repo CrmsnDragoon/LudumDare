@@ -3,6 +3,7 @@ package com.crmsndragoon.LD26.entities;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
@@ -57,7 +58,7 @@ public class EntityManager implements Disposable{
 	public void registerTiles(Stage stage) {
 		for(int i = 0; i< m_tiles.size();++i) {
 			stage.addActor(m_tiles.get(i));
-		}		
+		}
 	}
 
 	public Player getPlayer() {
@@ -68,5 +69,17 @@ public class EntityManager implements Disposable{
 	public void dispose() {
 		m_tiles.clear();
 		m_entities.clear();
+	}
+
+	public void draw(SpriteBatch batch) {
+		for(int i = 0; i< m_entities.size();++i) {
+			m_entities.get(i).draw(batch, 1);
+		}
+		for(int i = 0; i< m_tiles.size();++i) {
+			m_tiles.get(i).draw(batch, 1);
+		}
+		if (m_player != null) {
+			m_player.draw(batch, 1);
+		}
 	}
 }

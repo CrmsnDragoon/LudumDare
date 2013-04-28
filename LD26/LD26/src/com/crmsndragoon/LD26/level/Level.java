@@ -6,10 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -22,8 +22,6 @@ import com.crmsndragoon.LD26.entities.Tile;
 
 public class Level implements Disposable {
 	private Stage m_stage;
-	private Stage m_background;
-	private Stage m_foreground;
 	private InputMultiplexer m_inputMP;
 	private Array<TextureRegion> m_tileTypes;
 	private EntityManager m_entMgr;
@@ -32,12 +30,7 @@ public class Level implements Disposable {
 
 	public Level(EntityManager entityManager, PhysicsManager physicsManager) {
 		m_stage = new Stage();
-		m_background = new Stage();
-		m_foreground = new Stage();
 		m_inputMP = new InputMultiplexer();
-		//m_inputMP.addProcessor(m_stage);
-		//m_inputMP.addProcessor(m_background);
-		//m_inputMP.addProcessor(m_foreground);
 		m_tileTypes = new Array<TextureRegion>();
 		m_entMgr = entityManager;
 		m_physMgr = physicsManager;
@@ -58,12 +51,10 @@ public class Level implements Disposable {
 		return m_inputMP;
 	}
 
-	public void draw() {
-		
-		m_background.draw();
+	public void draw(SpriteBatch batch) {
 		m_stage.draw();
-		m_physMgr.render();
-		m_foreground.draw();
+		//m_entMgr.draw(batch);
+		//m_physMgr.render();
 	}
 
 	@Override
@@ -71,9 +62,6 @@ public class Level implements Disposable {
 		m_tileTypes.clear();
 		m_inputMP.clear();
 		m_stage.dispose();
-		m_background.dispose();
-		m_foreground.dispose();
-
 	}
 
 	public enum TILE_TYPES {
@@ -96,7 +84,6 @@ public class Level implements Disposable {
 						//spawn wall tile
 						Tile newTile = m_entMgr.createTile(i, j, m_tileTypes.get(TILE_TYPES.WALL.ordinal()));
 						m_physMgr.registerStaticEntity(newTile);
-						Gdx.app.log("ENTITY CREATED AT: "+i+", "+j, "Wall");
 						}
 						break;
 					case 0xFF0000: {
@@ -106,11 +93,9 @@ public class Level implements Disposable {
 						//this is done in EntityManager.registerEntities
 						player.setColor(1, 1, 0, 1);
 						m_physMgr.registerEntity(player);
-						Gdx.app.log("ENTITY CREATED AT: "+i+", "+j, "Player");
 						
 						m_entMgr.createTile(i, j, m_tileTypes.get(TILE_TYPES.START.ordinal()));
 						//m_physMgr.registerStaticEntity(newTile);
-						Gdx.app.log("ENTITY CREATED AT: "+i+", "+j, "Start");
 						}
 						break;
 					case 0xFFFF00:
@@ -118,7 +103,6 @@ public class Level implements Disposable {
 						//record and spawn goal tile
 						m_entMgr.createTile(i, j, m_tileTypes.get(TILE_TYPES.GOAL.ordinal()));
 						//m_physMgr.registerStaticEntity(newTile);
-						Gdx.app.log("ENTITY CREATED AT: "+i+", "+j, "Goal");
 						break;
 					case 0xFF00FF:
 						//Hazard

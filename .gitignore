@@ -185,3 +185,5 @@ LD26/LD26-desktop/libs/
 LD26/LD26-android/libs/
 LD22-Warmup/lib/
 LD26/LD26-html/war/WEB-INF/classes/com/crmsndragoon/LD26/client/GwtLauncher.class
+LD26/LD26-html/gwt-unitCache/
+LD26\LD26-html\war/

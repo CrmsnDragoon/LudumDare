@@ -4,8 +4,10 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.assets.*;
 import com.crmsndragoon.LD26.entities.EntityManager;
@@ -22,6 +24,8 @@ public class LD26 implements ApplicationListener {
 	private EntityManager m_entMgr;
 	private int m_width;
 	private int m_height;
+	private OrthographicCamera m_cam;
+	private SpriteBatch m_spriteBatch;
 	
 	@Override
 	public void create() {	
@@ -37,7 +41,8 @@ public class LD26 implements ApplicationListener {
 		m_physMgr = new PhysicsManager(-9.8f);
 		m_entMgr = new EntityManager();
 		m_level = new Level(m_entMgr,m_physMgr);
-		
+		m_cam = new OrthographicCamera(m_width, m_height);
+		m_spriteBatch = new SpriteBatch();
 		
 		m_globalInputMP = new InputMultiplexer();
 		//m_globalInputMP.addProcessor(m_guiMgr.getStage());
@@ -65,6 +70,7 @@ public class LD26 implements ApplicationListener {
 		m_texture.dispose();
 		m_guiMgr.dispose();
 		m_level.dispose();
+		m_spriteBatch.dispose();
 	}
 
 	@Override
@@ -72,11 +78,15 @@ public class LD26 implements ApplicationListener {
 		float dt = Gdx.graphics.getDeltaTime();
 		m_physMgr.update(dt);
 		m_entMgr.update(dt);
+		m_cam.setToOrtho(false,m_width, m_height);
+		m_cam.update();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		m_level.draw();
+		m_spriteBatch.setProjectionMatrix(m_cam.projection);
+		m_spriteBatch.begin();
+		m_level.draw(m_spriteBatch);
 		m_guiMgr.draw();
-		
+		m_spriteBatch.end();
 	}
 
 	@Override
