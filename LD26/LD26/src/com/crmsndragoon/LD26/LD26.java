@@ -4,10 +4,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.assets.*;
 import com.crmsndragoon.LD26.entities.EntityManager;
@@ -42,8 +40,8 @@ public class LD26 implements ApplicationListener {
 		
 		
 		m_globalInputMP = new InputMultiplexer();
-		m_globalInputMP.addProcessor(m_guiMgr.getStage());
-		m_globalInputMP.addProcessor(m_level.getInputMultiplexer());
+		//m_globalInputMP.addProcessor(m_guiMgr.getStage());
+		//m_globalInputMP.addProcessor(m_level.getInputMultiplexer());
 		m_assetMgr.finishLoading();
 		
 		
@@ -58,6 +56,8 @@ public class LD26 implements ApplicationListener {
 		m_level.loadLvlImage(Gdx.files.internal("levels/level1.png"));
 		
 		m_guiMgr.addTextActor((m_width * 0.8f) - 50, m_height* 0.99f, "ludum dare 26:\n minimalism");
+		m_globalInputMP.addProcessor(m_entMgr.getPlayer());
+		Gdx.input.setInputProcessor(m_globalInputMP);
 	}
 
 	@Override

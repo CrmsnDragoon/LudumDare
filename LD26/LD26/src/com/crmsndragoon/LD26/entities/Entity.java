@@ -25,7 +25,7 @@ public abstract class Entity extends Actor {
 	
 	public void update(float dt) {
 		if (m_physBody != null) {
-			setRotation(m_physBody.getAngle());
+			setRotation((float)Math.toDegrees(m_physBody.getAngle()));
 			setX(m_physBody.getPosition().x * PhysicsManager.BOX_TO_WORLD);
 			setY(m_physBody.getPosition().y * PhysicsManager.BOX_TO_WORLD);
 		}
@@ -35,7 +35,7 @@ public abstract class Entity extends Actor {
 	public void draw(SpriteBatch batch, float parentColour){
 		Color colour = getColor();
 		batch.setColor(colour.r,colour.g,colour.b,colour.a*parentColour);
-		batch.draw(m_sprite, getX(), getY(), getOriginX(), getOriginY(),
+		batch.draw(m_sprite, getX(), getY(), getOriginX()-.5f, getOriginY()-.5f,
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 
 	}

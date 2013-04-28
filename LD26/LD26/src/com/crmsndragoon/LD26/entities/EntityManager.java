@@ -2,7 +2,6 @@ package com.crmsndragoon.LD26.entities;
 
 import java.util.Vector;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,11 +21,15 @@ public class EntityManager implements Disposable{
 	
 	public Entity createPlayer(float x, float y, TextureRegion textureRegion) {
 		m_player = new Player(x * PhysicsManager.BOX_TO_WORLD, y* PhysicsManager.BOX_TO_WORLD, new Sprite(textureRegion));
+		m_player.setOriginX(.5f);
+		m_player.setOriginY(.5f);
 		return m_player;
 	}
 	
 	public Tile createTile(float x, float y, TextureRegion textureRegion) {
 		Tile newTile = new Tile(x * PhysicsManager.BOX_TO_WORLD, y* PhysicsManager.BOX_TO_WORLD, new Sprite(textureRegion));
+		newTile.setOriginX(.5f);
+		newTile.setOriginY(.5f);
 		m_tiles.add(newTile);
 		return newTile;
 	}
@@ -42,8 +45,7 @@ public class EntityManager implements Disposable{
 	}
 	
 	public void registerEntities(Stage stage) {
-				if (m_player != null) {
-			Gdx.app.log("ENTITY REGISTERED", "PLAYER");
+		if (m_player != null) {
 			stage.addActor(m_player);
 			stage.setKeyboardFocus(m_player);
 		}
@@ -58,6 +60,10 @@ public class EntityManager implements Disposable{
 		}		
 	}
 
+	public Player getPlayer() {
+		return m_player;
+	}
+	
 	@Override
 	public void dispose() {
 		m_tiles.clear();

@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.crmsndragoon.LD26.PhysicsManager;
 import com.crmsndragoon.LD26.entities.Entity;
 import com.crmsndragoon.LD26.entities.EntityManager;
+import com.crmsndragoon.LD26.entities.Player;
 import com.crmsndragoon.LD26.entities.Tile;
 
 public class Level implements Disposable {
@@ -34,9 +35,9 @@ public class Level implements Disposable {
 		m_background = new Stage();
 		m_foreground = new Stage();
 		m_inputMP = new InputMultiplexer();
-		m_inputMP.addProcessor(m_stage);
-		m_inputMP.addProcessor(m_background);
-		m_inputMP.addProcessor(m_foreground);
+		//m_inputMP.addProcessor(m_stage);
+		//m_inputMP.addProcessor(m_background);
+		//m_inputMP.addProcessor(m_foreground);
 		m_tileTypes = new Array<TextureRegion>();
 		m_entMgr = entityManager;
 		m_physMgr = physicsManager;
@@ -58,8 +59,10 @@ public class Level implements Disposable {
 	}
 
 	public void draw() {
+		
 		m_background.draw();
 		m_stage.draw();
+		m_physMgr.render();
 		m_foreground.draw();
 	}
 
@@ -146,7 +149,10 @@ public class Level implements Disposable {
 			}
 			m_entMgr.registerTiles(m_stage);
 			m_entMgr.registerEntities(m_stage);
-
+			Player player = m_entMgr.getPlayer();
+			if (player != null) {
+				m_inputMP.addProcessor(player);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e.getMessage());
