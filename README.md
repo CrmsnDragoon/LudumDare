@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/CrmsnDragoon/LudumDare.png?label=ready)](https://waffle.io/CrmsnDragoon/LudumDare)
 ## LD26: Minimalism ##
 - Two colour palette
 - 3 buttons or less (<-, ->, Space?)
